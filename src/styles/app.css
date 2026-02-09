@@ -1,19 +1,52 @@
 /* =======================
-   APP E LAYOUT PRINCIPAL
+   GLOBAL RESET
+   ======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #f4f4f6; /* fundo neutro */
+  color: #1f2937;
+}
+
+/* Scrollbar global */
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cfd6dd;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =======================
+   APP LAYOUT
    ======================= */
 .app {
   display: flex;
   height: 100vh;
-  font-family: Arial, sans-serif;
-  background-color: #f4f6f8;
 }
 
-/* MAIN CONTENT */
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #eaeaea; /* neutro */
 }
 
 /* =======================
@@ -21,13 +54,15 @@
    ======================= */
 .sidebar {
   width: 220px;
-  min-width: 60px; /* largura quando colapsado */
-  background-color: #e4e9f0;
+  min-width: 60px;
+  background-color: #f4f4f6; /* neutro */
+  color: #1f2937;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease, padding 0.3s ease;
   overflow: hidden;
+  position: relative;
 }
 
 .sidebar.collapsed {
@@ -37,57 +72,48 @@
 
 /* Botão de colapso */
 .sidebar-toggle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  cursor: pointer;
   font-size: 22px;
+  cursor: pointer;
+  z-index: 10;
+  margin-bottom: 20px;
+  color: #1f2937;
 }
 
-/* Sidebar title */
+.sidebar.collapsed .sidebar-toggle {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  margin-bottom: 0;
+}
+
+.sidebar:not(.collapsed) .sidebar-toggle {
+  position: static;
+}
+
+/* Sidebar títulos e subtítulos */
 .sidebar h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #1f2937;
 }
 
-/* Subtítulo boards */
 .sidebar .board-subtitle {
-  font-size: 14px;
   color: #555;
-  margin-bottom: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* Botões boards */
+/* Botões */
 .sidebar button {
-  border: 1px solid #cfd4da;
-  background: #fff;
+  border: 1px solid #cfd6dd;
+  background: #ffffff;
+  color: #1f2937;
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
   text-align: left;
   margin-bottom: 8px;
   transition: background 0.2s, border-color 0.2s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .sidebar button:hover {
-  background-color: #dce7ff;
-}
-
-.sidebar.collapsed button {
-  text-align: center;
-  padding: 10px 0;
-  font-size: 18px;
+  background-color: #d0eaff;
 }
 
 /* =======================
@@ -99,8 +125,8 @@
   align-items: center;
   padding: 15px 20px;
   background-color: #ffffff;
+  color: #1f2937;
   border-bottom: 1px solid #cfd6dd;
-  flex-shrink: 0;
 }
 
 .topbar .board-title {
@@ -114,8 +140,9 @@
 }
 
 .topbar button {
-  border: 1px solid #cfd4da;
-  background: #fff;
+  border: 1px solid #1e90ff;
+  background: #1e90ff;
+  color: #fff;
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
@@ -123,7 +150,7 @@
 }
 
 .topbar button:hover {
-  background-color: #dce7ff;
+  background-color: #63b3ff;
 }
 
 /* =======================
@@ -142,16 +169,26 @@
   min-height: 100%;
 }
 
+/* =======================
+   CORES DAS COLUNAS
+   ======================= */
+.column:nth-child(1) { background-color: #1e90ff; } /* azul */
+.column:nth-child(2) { background-color: #ff4d4d; } /* vermelho */
+.column:nth-child(3) { background-color: #ffa500; } /* laranja */
+.column:nth-child(4) { background-color: #9b30ff; } /* roxo */
+.column:nth-child(5) { background-color: #32cd32; } /* verde */
+
 .column {
-  background-color: #f5f7fa;
   border-radius: 10px;
   padding: 10px;
-  min-width: 220px;
+  width: 300px; /* largura fixa atualizada */
+  flex-shrink: 0; /* evita encolher */
   display: flex;
   flex-direction: column;
   max-height: 100%;
 }
 
+/* Cabeçalho da coluna */
 .column-header {
   display: flex;
   justify-content: space-between;
@@ -162,15 +199,20 @@
 .column-header h3 {
   font-size: 16px;
   font-weight: bold;
+  color: #fff; /* título da coluna visível sobre fundo colorido */
 }
 
 .column-count {
-  background-color: #cfd6dd;
+  background-color: rgba(255,255,255,0.7);
   padding: 2px 6px;
   border-radius: 6px;
   font-size: 12px;
+  color: #1f2937;
 }
 
+/* =======================
+   CARDS BRANCOS
+   ======================= */
 .cards {
   display: flex;
   flex-direction: column;
@@ -179,12 +221,15 @@
 }
 
 .card {
-  background-color: #fff;
+  background-color: #ffffff; /* card branco */
   border-radius: 10px;
   padding: 10px;
   border: 1px solid #cfd6dd;
   display: flex;
   flex-direction: column;
+  color: #1f2937;
+  width: 100%; /* ocupa toda a largura da coluna */
+  box-sizing: border-box;
 }
 
 .card-title {
@@ -205,6 +250,7 @@
   font-size: 12px;
 }
 
+/* Badges de prioridade */
 .badge {
   padding: 2px 6px;
   border-radius: 6px;
@@ -214,17 +260,9 @@
   font-weight: bold;
 }
 
-.priority-Alta {
-  background-color: #ff5b5b;
-}
-
-.priority-Média {
-  background-color: #ffb84d;
-}
-
-.priority-Baixa {
-  background-color: #4caf50;
-}
+.priority-Alta { background-color: #ff1a1a; }
+.priority-Média { background-color: #ffa500; }
+.priority-Baixa { background-color: #32cd32; }
 
 .assigned {
   font-size: 12px;
@@ -233,13 +271,13 @@
 
 .empty-column {
   font-size: 12px;
-  color: #999;
+  color: #555;
   text-align: center;
   margin-top: 10px;
 }
 
 /* =======================
-   SCROLLBAR
+   SCROLLBAR BOARD
    ======================= */
 .columns::-webkit-scrollbar {
   height: 10px;
